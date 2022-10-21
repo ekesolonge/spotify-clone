@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary: #1ed760;
+}
+
 html,
 body,
 div#root {
@@ -9,4 +13,34 @@ div#root {
   margin: 0;
   padding: 0;
   height: 100%;
+}
+
+@layer components {
+  .button {
+    @apply h-5 w-5 text-white opacity-70 hover:opacity-100 cursor-pointer;
+  }
+}
+
+.slider:hover {
+  opacity: 1;
+}
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #e4e3e3;
+  cursor: pointer;
+  transition: all ease 200ms;
+}
+
+.slider::-moz-range-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #6d6d6d;
+  cursor: pointer;
 }

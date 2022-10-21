@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { HiHeart, HiOutlineClock, HiOutlineHeart } from "react-icons/hi";
+import { HiOutlineClock } from "react-icons/hi";
 import { useApp } from "../context/AppProvider";
 import { useAuth } from "../context/AuthProvider";
 import spotifyApi from "../lib/spotify";
 import msToMinutesAndSeconds from "../utils/msToMinutesAndSeconds";
+import Loader from "./Loader/Loader";
 
 interface Playlist extends SpotifyApi.SinglePlaylistResponse {
   primary_color?: string;
@@ -13,15 +14,25 @@ const Main = () => {
   const [playlist, setPlaylist] = useState<Playlist | null>(null);
   const [loading, setLoading] = useState(true);
   const { token } = useAuth();
-  const { playlistId, setCurrentTrackId } = useApp();
+  const { playlistId, setCurrentTrackId, currentTrackId, setIsPlaying } =
+    useApp();
   useEffect(() => {
-    if (spotifyApi.getAccessToken() && playlistId)
+    if (spotifyApi.getAccessToken() && playlistId) {
+      setLoading(true);
       spotifyApi
         .getPlaylist(playlistId)
         .then(data => setPlaylist(data.body))
         .catch(error => console.error(error))
         .finally(() => setLoading(false));
+    }
   }, [spotifyApi, token, playlistId]);
+
+  const playSong = (track: SpotifyApi.TrackObjectFull | null) => {
+    if (!track || !playlist) return;
+    spotifyApi.play({ context_uri: playlist?.uri, offset: { uri: track.uri } });
+    setCurrentTrackId(track?.id);
+    setIsPlaying(true);
+  };
 
   const colors = [
     "indingo-500",
@@ -35,12 +46,17 @@ const Main = () => {
   ];
   const gradient = colors[Math.floor(Math.random() * colors.length)];
 
+  if (loading)
+    return (
+      <div className="flex items-center justify-center flex-grow">
+        <Loader />
+      </div>
+    );
+
   return (
-    <div className="flex-grow p-4 text-sm bg-[#121212] rounded-md w-[220px] overflow-y-auto h-[calc(100vh-168px)] scrollbar-thin scrollbar-thumb-[hsla(0,0%,100%,.3)] hover:scrollbar-thumb-[hsla(0,0%,100%,.5)]">
+    <main className="flex-grow p-4 text-sm bg-[#121212] rounded-md w-[220px] overflow-y-auto h-[calc(100vh-168px)] scrollbar-thin scrollbar-thumb-[hsla(0,0%,100%,.3)] hover:scrollbar-thumb-[hsla(0,0%,100%,.5)]">
       <section
-        className={`p-4 gap-5 bg-gradient-to-b from-${
-          playlist?.primary_color ? `[${playlist?.primary_color}]` : gradient
-        } to-[#121212] flex`}
+        className={`p-4 gap-5 bg-gradient-to-b from-${gradient} to-[#121212] flex`}
       >
         <img
           src={playlist?.images?.[0].url}
@@ -52,9 +68,16 @@ const Main = () => {
             <p className="mb-2 font-bold text-xs">
               {`${playlist?.public ? "PUBLIC" : "PRIVATE"} PLAYLIST`}
             </p>
-            <h1 className="text-2xl md:text-4xl xl:text-8xl font-bold mb-8">
-              {playlist?.name}
-            </h1>
+            {playlist?.name &&
+              (playlist.name.length > 20 ? (
+                <h1 className="text-2xl md:text-4xl xl:text-4xl font-bold mb-8">
+                  {playlist.name}
+                </h1>
+              ) : (
+                <h1 className="text-2xl md:text-4xl xl:text-7xl font-bold mb-8">
+                  {playlist.name}
+                </h1>
+              ))}
             <p className="mb-2 text-[#B3B3B3]">{playlist?.description}</p>
             <p className="font-bold">
               {`${playlist?.owner.display_name} • ${playlist?.tracks.total} songs, `}
@@ -76,7 +99,7 @@ const Main = () => {
         {playlist?.tracks.items.map((track, index) => (
           <div
             key={track.track?.id}
-            className="text-[#B3B3B3] p-3 items-center text-sm font-semibold grid grid-cols-track hover:bg-[#ffffff1a]"
+            className="text-[#B3B3B3] p-3 items-center text-sm font-semibold grid grid-cols-track opacity-80 hover:bg-[#ffffff1a] hover:opacity-100"
           >
             <p>{index + 1}</p>
             <div className="flex gap-2 items-center">
@@ -87,10 +110,12 @@ const Main = () => {
               />
               <div>
                 <a
-                  onClick={() =>
-                    track.track && setCurrentTrackId(track.track?.id)
-                  }
-                  className="text-white cursor-pointer hover:underline"
+                  onClick={() => playSong(track.track)}
+                  className={`${
+                    track.track?.id === currentTrackId
+                      ? "text-primary"
+                      : "text-white"
+                  } cursor-pointer hover:underline`}
                 >
                   {track.track?.name}
                 </a>
@@ -112,15 +137,13 @@ const Main = () => {
             </p>
             <div className="flex justify-end">
               <div className="flex gap-6">
-                <HiHeart className="h-6 w-6 text-[#1ed760]" />
                 <p>{msToMinutesAndSeconds(track.track?.duration_ms)}</p>
-                {/* <HiOutlineHeart className="h-6 w-6" /> */}
               </div>
             </div>
           </div>
         ))}
       </section>
-    </div>
+    </main>
   );
 };
 

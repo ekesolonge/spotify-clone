@@ -50,10 +50,6 @@ const Sidebar = () => {
             <div className="inline-block w-full h-6 opacity-30 bg-gray-400 my-3 animate-pulse"></div>
             <div className="inline-block w-full h-6 opacity-30 bg-gray-400 my-3 animate-pulse"></div>
             <div className="inline-block w-full h-6 opacity-30 bg-gray-400 my-3 animate-pulse"></div>
-            <div className="inline-block w-full h-6 opacity-30 bg-gray-400 my-3 animate-pulse"></div>
-            <div className="inline-block w-full h-6 opacity-30 bg-gray-400 my-3 animate-pulse"></div>
-            <div className="inline-block w-full h-6 opacity-30 bg-gray-400 my-3 animate-pulse"></div>
-            <div className="inline-block w-full h-6 opacity-30 bg-gray-400 my-3 animate-pulse"></div>
           </>
         ) : (
           playlists?.map(playlist => (
