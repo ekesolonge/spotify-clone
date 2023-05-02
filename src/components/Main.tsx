@@ -124,7 +124,7 @@ const Main = () => {
         </div>
       </section>
       <section>
-        <div className="text-[#B3B3B3] p-3 items-center text-sm my-5 grid grid-cols-track border-b-[1px] border-[hsla(0,0%,100%,.1)]">
+        <div className="text-[#B3B3B3] p-3 items-center text-sm my-5 grid grid-cols-track md:gap-2 border-b-[1px] border-[hsla(0,0%,100%,.1)]">
           <p>#</p>
           <p className="col-span-3 md:col-auto">TITLE</p>
           <p className="hidden md:block">ALBUM</p>
@@ -136,7 +136,7 @@ const Main = () => {
         {playlist?.tracks.items.map((track, index) => (
           <div
             key={track.track?.id}
-            className="text-[#B3B3B3] p-3 items-center text-sm font-semibold grid grid-cols-track opacity-80 hover:bg-[#ffffff1a] hover:opacity-100"
+            className="text-[#B3B3B3] p-3 items-center text-sm font-semibold grid grid-cols-track md:gap-2 opacity-80 hover:bg-[#ffffff1a] hover:opacity-100"
           >
             <p>{index + 1}</p>
             <div className="flex gap-2 items-center col-span-3 md:col-auto">
