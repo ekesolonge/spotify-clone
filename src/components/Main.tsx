@@ -81,7 +81,7 @@ const Main = () => {
 
   return (
     <main
-      className={`flex-grow sm:p-4 text-sm bg-[#121212] rounded-md w-[220px] overflow-y-auto h-[calc(100vh-168px)] scrollbar-thin scrollbar-thumb-[hsla(0,0%,100%,.3)] hover:scrollbar-thumb-[hsla(0,0%,100%,.5)] ${
+      className={`flex-grow sm:p-4 text-sm bg-[#121212] rounded-md w-[220px] overflow-y-auto h-[calc(100dvh-168px)] scrollbar-thin scrollbar-thumb-[hsla(0,0%,100%,.3)] hover:scrollbar-thumb-[hsla(0,0%,100%,.5)] ${
         sidebar ? "hidden" : "block"
       } md:block`}
     >

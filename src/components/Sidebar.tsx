@@ -30,7 +30,7 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`py-3 bg-[#121212] rounded-md h-[calc(100vh-168px)] w-full md:w-[240px] md:block ${
+      className={`py-3 bg-[#121212] rounded-md h-[calc(100dvh-168px)] w-full md:w-[240px] md:block ${
         sidebar ? "block" : "hidden"
       }`}
     >
