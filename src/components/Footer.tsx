@@ -146,7 +146,7 @@ const Footer = () => {
 
   return (
     <div className="flex justify-between items-center p-4">
-      <div className="flex items-center gap-5 w-1/4 h-full">
+      <div className="flex items-center gap-5 h-full w-3/4 sm:w-1/4">
         {songInfo ? (
           <Image
             src={songInfo?.album.images[0].url}
@@ -158,9 +158,9 @@ const Footer = () => {
         ) : (
           <div className="h-[40px] w-[40px] opacity-30 bg-gray-400 my-3 animate-pulse"></div>
         )}
-        <div>
-          <p>{songInfo?.name}</p>
-          <p className="text-xs text-[#b3b3b3]">
+        <div className="overflow-hidden">
+          <p className="truncate">{songInfo?.name}</p>
+          <p className="text-xs text-[#b3b3b3] truncate">
             {songInfo?.artists.map((artist, index) =>
               songInfo?.artists && index === songInfo?.artists?.length - 1
                 ? artist.name
@@ -169,18 +169,21 @@ const Footer = () => {
           </p>
         </div>
       </div>
-      <div className="w-2/4 flex items-center justify-center gap-4">
+      <div className="w-1/4 sm:w-2/4 flex items-center justify-center gap-4">
         {shuffle ? (
           <BsShuffle
             onClick={handleShuffle}
-            className="button text-[#1ed760]"
+            className="button text-[#1ed760] hidden sm:flex"
           />
         ) : (
-          <BsShuffle onClick={handleShuffle} className="button" />
+          <BsShuffle
+            onClick={handleShuffle}
+            className="button hidden sm:flex"
+          />
         )}
         <AiOutlineStepBackward
           onClick={() => spotifyApi.skipToPrevious()}
-          className="button h-6 w-6"
+          className="button h-6 w-6 hidden sm:flex"
         />
         {isPlaying ? (
           <HiPause
@@ -195,20 +198,23 @@ const Footer = () => {
         )}
         <AiOutlineStepForward
           onClick={() => spotifyApi.skipToNext()}
-          className="button h-6 w-6"
+          className="button h-6 w-6 hidden sm:flex"
         />
         {repeat === "off" ? (
-          <TbRepeat onClick={handleRepeat} className="button" />
+          <TbRepeat onClick={handleRepeat} className="button hidden sm:flex" />
         ) : repeat === "track" ? (
           <TbRepeatOnce
             onClick={handleRepeat}
-            className="button text-primary"
+            className="button text-primary hidden sm:flex"
           />
         ) : (
-          <TbRepeat onClick={handleRepeat} className="button text-primary" />
+          <TbRepeat
+            onClick={handleRepeat}
+            className="button text-primary hidden sm:flex"
+          />
         )}
       </div>
-      <div className="flex items-center justify-end gap-2 w-1/4">
+      <div className="items-center justify-end gap-2 w-1/4 hidden sm:flex">
         <BiVolumeLow
           className="button"
           onClick={() => volume > 0 && setVolume(prev => prev - 10)}

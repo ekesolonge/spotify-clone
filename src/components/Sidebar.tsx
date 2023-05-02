@@ -12,6 +12,7 @@ const Sidebar = () => {
   >(null);
   const setPlaylistId = useStore(state => state.setPlaylistId);
   const playlistId = useStore(state => state.playlistId);
+  const sidebar = useStore(state => state.sidebar);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -28,7 +29,11 @@ const Sidebar = () => {
   }, [spotifyApi, setPlaylistId, session, playlistId]);
 
   return (
-    <div className="py-3 bg-[#121212] rounded-md h-[calc(100vh-168px)] w-[240px] hidden sm:block">
+    <div
+      className={`py-3 bg-[#121212] rounded-md h-[calc(100vh-168px)] w-full md:w-[240px] md:block ${
+        sidebar ? "block" : "hidden"
+      }`}
+    >
       <div className="px-3">
         <a className="flex gap-3 items-center text-[#b3b3b3] hover:text-white cursor-pointer py-3">
           <HiViewBoards className="h-6 w-6" />

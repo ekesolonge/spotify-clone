@@ -7,6 +7,8 @@ type Store = {
   setCurrentTrackId: (currentTrackId: string) => void;
   isPlaying: boolean;
   setIsPlaying: (isPlaying: boolean) => void;
+  sidebar: boolean;
+  toggleSidebar: () => void;
 };
 
 const useStore = create<Store>(set => ({
@@ -16,6 +18,8 @@ const useStore = create<Store>(set => ({
   setCurrentTrackId: currentTrackId => set({ currentTrackId }),
   isPlaying: false,
   setIsPlaying: isPlaying => set({ isPlaying }),
+  sidebar: false,
+  toggleSidebar: () => set(state => ({ sidebar: !state.sidebar })),
 }));
 
 export default useStore;

@@ -1,29 +1,41 @@
+import useStore from "@/store";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
-import { useRouter } from "next/router";
+import { AiOutlineClose } from "react-icons/ai";
+import { BiMenu } from "react-icons/bi";
 import { HiOutlineHome, HiOutlineSearch } from "react-icons/hi";
 
 const Header = () => {
-  const router = useRouter();
   const { data: session } = useSession();
+  const sidebar = useStore(state => state.sidebar);
+  const toggleSidebar = useStore(state => state.toggleSidebar);
 
   return (
     <div className="flex justify-between p-4">
-      <a onClick={() => router.push("/")}>
-        <Image
-          className="h-10 w-10"
-          src="/logo.svg"
-          alt="logo"
-          height={168}
-          width={168}
-        />
-      </a>
-
-      <div className="flex gap-4 items-center">
+      <div>
+        <a>
+          <Image
+            className="h-10 w-10 hidden md:block"
+            src="/logo.svg"
+            alt="logo"
+            height={168}
+            width={168}
+          />
+        </a>
         <button
-          onClick={() => router.push("/")}
-          className="bg-[#242424] flex items-center justify-center rounded-full flex-shrink-0 h-10 w-10 hover:opacity-[0.9]"
+          onClick={() => toggleSidebar()}
+          className="flex items-center justify-center rounded-full h-10 w-10 hover:opacity-[0.9] md:hidden"
         >
+          {sidebar ? (
+            <AiOutlineClose className="text-[hsla(0,0%,100%,.7)] h-6 w-6" />
+          ) : (
+            <BiMenu className="text-[hsla(0,0%,100%,.7)] h-6 w-6" />
+          )}
+        </button>
+      </div>
+
+      <div className="gap-4 items-center hidden md:flex">
+        <button className="bg-[#242424] flex items-center justify-center rounded-full flex-shrink-0 h-10 w-10 hover:opacity-[0.9]">
           <HiOutlineHome className="text-[hsla(0,0%,100%,.7)] h-6 w-6" />
         </button>
         <div className="bg-[#242424] flex gap-2 items-center w-full rounded-3xl hover:opacity-[0.9]">

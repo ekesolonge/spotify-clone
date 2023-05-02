@@ -33,6 +33,7 @@ const Main = () => {
   const setCurrentTrackId = useStore(state => state.setCurrentTrackId);
   const currentTrackId = useStore(state => state.currentTrackId);
   const setIsPlaying = useStore(state => state.setIsPlaying);
+  const sidebar = useStore(state => state.sidebar);
 
   useEffect(() => {
     if (spotifyApi.getAccessToken() && playlistId) {
@@ -79,17 +80,25 @@ const Main = () => {
     );
 
   return (
-    <main className="flex-grow p-4 text-sm bg-[#121212] rounded-md w-[220px] overflow-y-auto h-[calc(100vh-168px)] scrollbar-thin scrollbar-thumb-[hsla(0,0%,100%,.3)] hover:scrollbar-thumb-[hsla(0,0%,100%,.5)]">
+    <main
+      className={`flex-grow sm:p-4 text-sm bg-[#121212] rounded-md w-[220px] overflow-y-auto h-[calc(100vh-168px)] scrollbar-thin scrollbar-thumb-[hsla(0,0%,100%,.3)] hover:scrollbar-thumb-[hsla(0,0%,100%,.5)] ${
+        sidebar ? "hidden" : "block"
+      } md:block`}
+    >
       {alert && <p className="p-4 bg-red-500 text-white">{alert}</p>}
-      <section className={`flex p-4 gap-5 bg-gradient-to-b ${color} flex-col md:flex-row`}>
+      <section
+        className={`flex p-4 gap-5 bg-gradient-to-b ${color} flex-col md:flex-row`}
+      >
         {playlist?.images && (
-          <Image
-            src={playlist.images[0].url}
-            alt="playlist-cover"
-            className="h-[230px] w-[230px] shadow-2xl bg-slate-600"
-            width={230}
-            height={230}
-          />
+          <div className="aspect-square">
+            <Image
+              src={playlist.images[0].url}
+              alt="playlist-cover"
+              className="w-full md:min-w-[230px] shadow-2xl bg-slate-600"
+              width={230}
+              height={230}
+            />
+          </div>
         )}
         <div className="flex items-end">
           <div className="font-semibold">
@@ -117,10 +126,10 @@ const Main = () => {
       <section>
         <div className="text-[#B3B3B3] p-3 items-center text-sm my-5 grid grid-cols-track border-b-[1px] border-[hsla(0,0%,100%,.1)]">
           <p>#</p>
-          <p>TITLE</p>
+          <p className="col-span-3 md:col-auto">TITLE</p>
           <p className="hidden md:block">ALBUM</p>
           <p className="hidden md:block">DATE ADDED</p>
-          <p className="flex justify-end">
+          <p className="flex justify-end w-[5ch]">
             <HiOutlineClock className="h-6 w-6" />
           </p>
         </div>
