@@ -18,7 +18,7 @@ type Props = {
 
 const Login = ({ providers }: Props) => {
   return (
-    <div className="h-screen grid place-items-center bg-black">
+    <div className="h-[100dvh] grid place-items-center bg-black">
       <NextSeo title="Login" />
       <div className="flex items-center justify-center flex-col">
         <Image

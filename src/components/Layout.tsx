@@ -6,7 +6,7 @@ import Sidebar from "./Sidebar";
 
 const Layout = () => {
   return (
-    <div className="h-screen flex flex-col justify-between text-white sm:p-2 overflow-hidden">
+    <div className="h-[100dvh] flex flex-col justify-between text-white sm:p-2 overflow-hidden">
       <Header />
       <div className="flex gap-2 basis-full">
         <Sidebar />
