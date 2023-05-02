@@ -52,10 +52,9 @@ const Sidebar = () => {
       <div className="overflow-y-auto h-[calc(100%-160px)] scrollbar-thin scrollbar-thumb-[hsla(0,0%,100%,.3)] hover:scrollbar-thumb-[hsla(0,0%,100%,.5)]">
         {loading
           ? Array.from(Array(7).keys()).map(index => (
-              <div
-                key={index}
-                className="inline-block w-full h-6 opacity-30 bg-gray-400 my-3 animate-pulse mx-3"
-              />
+              <div key={index} className="px-3">
+                <div className="inline-block w-full h-6 opacity-30 bg-[#ffffff1a] my-3 animate-pulse" />
+              </div>
             ))
           : playlists?.map(playlist => (
               <a
