@@ -5,6 +5,16 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  safelist: [
+    "from-indigo-500",
+    "from-blue-500",
+    "from-green-500",
+    "from-red-500",
+    "from-yellow-500",
+    "from-pink-500",
+    "from-purple-500",
+    "from-orange-500",
+  ],
   theme: {
     extend: {
       gridTemplateColumns: {
